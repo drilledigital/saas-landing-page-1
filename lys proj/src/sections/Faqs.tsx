@@ -1,5 +1,9 @@
+"use client";
 import Tag from "@/components/Tag";
 import { twMerge } from "tailwind-merge";
+import { useState } from "react";
+import { motion } from "framer-motion";
+
 const faqs = [
     {
         question: "How is Layers different from other design tools?",
@@ -24,14 +28,15 @@ const faqs = [
 ];
 
 export default function Faqs() {
-    const selectedIndex =0;
+    const [selectedIndex, setSelectedIndex] = useState(0);
+    
     return (
         <section className="py-24">
             <div className="container">
                 <div className="flex justify-center">
                     <Tag>Faqs</Tag>
                 </div>
-                <h2 className="text-6xl font-medium  mt-6 text-center max-w-xl mx-auto">
+                <h2 className="text-6xl font-medium mt-6 text-center max-w-xl mx-auto">
                     Questions? We've got{" "}
                     <span className="text-lime-400">answers</span>
                 </h2>
@@ -39,7 +44,8 @@ export default function Faqs() {
                     {faqs.map((faq, faqIndex) => (
                         <div
                             key={faq.question}
-                            className="bg-neutral-900 rounded-2xl border border-white/10 p-6"
+                            className="bg-neutral-900 rounded-2xl border border-white/10 p-6 cursor-pointer"
+                            onClick={() => setSelectedIndex(selectedIndex === faqIndex ? -1 : faqIndex)}
                         >
                             <div className="flex justify-between items-center">
                                 <h3 className="font-medium">{faq.question}</h3>
@@ -53,16 +59,23 @@ export default function Faqs() {
                                     strokeWidth="2"
                                     strokeLinecap="round"
                                     strokeLinejoin="round"
-                                    className={twMerge("feather feather-plus text-lime-400 flex-shrink-0", selectedIndex === faqIndex && 'rotate-45')}
+                                    className={twMerge("feather feather-plus text-lime-400 flex-shrink-0 transition-transform", selectedIndex === faqIndex && 'rotate-45')}
                                 >
                                     <line x1="12" y1="5" x2="12" y2="19"></line>
                                     <line x1="5" y1="12" x2="19" y2="12"></line>
                                 </svg>
-                            
                             </div>
-                            <div className={twMerge("mt-6", selectedIndex !== faqIndex && "hidden")}>
-                            <p className="text-white/50">{faq.answer}</p>
-                            </div>
+                            <motion.div
+                                initial={{ opacity: 0, height: 0 }}
+                                animate={{ 
+                                    opacity: selectedIndex === faqIndex ? 1 : 0, 
+                                    height: selectedIndex === faqIndex ? "auto" : 0
+                                }}
+                                transition={{ duration: 0.3 }}
+                                className="overflow-hidden"
+                            >
+                                <p className="text-white/50 mt-6">{faq.answer}</p>
+                            </motion.div>
                         </div>
                     ))}
                 </div>
