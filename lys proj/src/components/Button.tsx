@@ -15,7 +15,7 @@ export default function Button(
     props: {
         variant: "primary" | "secondary";
         size?: 'sm'; 
-    } & ButtonHTMLAttributes<HTMLButtonElement>
+    } & HTMLAttributes<HTMLButtonElement>
 ) {
     const {variant, className, size, ...otherProps} = props;
     return (

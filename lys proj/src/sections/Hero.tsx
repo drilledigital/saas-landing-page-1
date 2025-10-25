@@ -109,7 +109,6 @@ export default function Hero() {
                         placeholder="Enter your email"
                     />
                     <Button
-                        type="submit"
                         variant="primary"
                         className="whitespace-nowrap"
                         size="sm"
